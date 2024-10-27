@@ -6,11 +6,20 @@ let totalPlayerCost = 0;
 
 buttons.forEach((button)=>{
     button.addEventListener('click', ()=>{
+        if(count < 5){
         const playerName = button.getAttribute('data-name');
         const listItem = document.createElement('li');
         listItem.textContent = playerName;
         selectedList.appendChild(listItem);
         count++;
+
+        button.disabled = true;
+
+        if (count === 5){
+            buttons.forEach(btn => button.disabled = true);
+        }
+
+        }
         
     });
 });
