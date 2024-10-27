@@ -81,4 +81,5 @@ function deleteLast() {
 
 function updateScreen() {
     screenPara.innerText = previousInput + ' ' + operator + ' ' + currentInput;
+    
 }
