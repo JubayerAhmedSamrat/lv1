@@ -2,9 +2,20 @@ const screenPara = document.getElementById('screenPara');
 let currentInput = '';
 let previousInput = '';
 let operator = '';
+const clickSound = document.getElementById('clickSound');
+const hoverSound = document.getElementById('hoverSound');
 
 document.querySelectorAll('button').forEach(button => {
+
+    button.addEventListener('mouseover', function (){
+        const hoverSound  = currentTime = 0;
+        hoverSound.play();
+    })
+
     button.addEventListener('click', () => {
+        clickSound.currentTime = 0; 
+        clickSound.play(); 
+
         const value = button.id;
 
         if (value >= '0' && value <= '9' || value === '.') {
