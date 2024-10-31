@@ -1,96 +1,23 @@
-const screenPara = document.getElementById('screenPara');
-let currentInput = '';
-let previousInput = '';
-let operator = '';
-const clickSound = document.getElementById('clickSound');
-const hoverSound = document.getElementById('hoverSound');
-
-document.querySelectorAll('button').forEach(button => {
-
-    button.addEventListener('mouseover', function (){
-        const hoverSound  = currentTime = 0;
-        hoverSound.play();
-    })
-
-    button.addEventListener('click', () => {
-        clickSound.currentTime = 0; 
-        clickSound.play(); 
-
-        const value = button.id;
-
-        if (value >= '0' && value <= '9' || value === '.') {
-            handleNumber(value);
-        } else if (value === 'AC') {
-            clearAll();
-        } else if (value === 'Del') {
-            deleteLast();
-        } else if (value === '=') {
-            calculate();
-        } else {
-            handleOperator(value);
-        }
-        updateScreen();
-    });
-});
-
-function handleNumber(number) {
-    if (number === '.' && currentInput.includes('.')) return;
-    currentInput += number;
+function clearResult() {
+    document.getElementById("result").value = "";
 }
 
-function handleOperator(op) {
+function appendCharacter(char) {
+    document.getElementById("result").value += char;
+}
 
-    if (previousInput !== '') {
-        calculate();
+function calculateResult() {
+    let result = document.getElementById("result").value;
+    try {
+        result = eval(result);
+        document.getElementById("result").value = result;
+    } catch (error) {
+        document.getElementById("result").value = "Error";
     }
-    operator = op;
-    previousInput = currentInput;
-    currentInput = '';
 }
 
-function calculate() {
-    let result;
-    const prev = parseFloat(previousInput);
-    const curr = parseFloat(currentInput);
 
-    if (isNaN(prev) || isNaN(curr)) return;
-
-    switch (operator) {
-        case '+':
-            result = prev + curr;
-            break;
-        case '-':
-            result = prev - curr;
-            break;
-        case '*':
-            result = prev * curr;
-            break;
-        case '/':
-            result = curr === 0 ? 'Error' : prev / curr;
-            break;
-        case '%':
-            result = prev % curr;
-            break;
-        default:
-            return;
-    }
-
-    currentInput = result.toString();
-    operator = '';
-    previousInput = '';
-}
-
-function clearAll() {
-    currentInput = '';
-    previousInput = '';
-    operator = '';
-}
-
-function deleteLast() {
-    currentInput = currentInput.slice(0, -1);
-}
-
-function updateScreen() {
-    screenPara.innerText = previousInput + ' ' + operator + ' ' + currentInput;
-    
+function deleteCharacter() {
+    let result = document.getElementById("result").value;
+    document.getElementById("result").value = result.slice(0, -1);
 }
